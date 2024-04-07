@@ -1,0 +1,40 @@
+db.ApplicantHiringActivityCollection.aggregate([
+  { $unwind: "$JobInformations" },
+  { $group: {
+      _id: "$JobInformations.JobId",
+      count: { $sum: 1 }
+  }},
+  { $match: { count: { $gt: 1 } }},
+  { $project: {
+      _id: 0,
+      JobId: "$_id"
+  }}
+])
+
+db.ApplicantHiringActivityCollection.aggregate([
+  {
+    $unwind: "$JobInformations",
+  },
+  { $match: { "JobInformations.ApplyDate": { $lt: ISODate("2023-05-01T00:00:00.000+00:00") } } },
+  {
+    $group: {
+      _id: "$JobInformations.JobId",
+      count: {
+        $sum: 1,
+      },
+    },
+  },
+  {
+    $match: {
+      count: {
+        $gte: 1,
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      JobId: "$_id",
+    },
+  },
+])

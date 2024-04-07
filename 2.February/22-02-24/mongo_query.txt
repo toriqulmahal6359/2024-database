@@ -1,0 +1,41 @@
+1227085,
+1227068,
+1226989,
+1226980,
+1226913,
+1226894,
+1226889,
+1226888,
+1226800,
+1226778
+
+db.gatewayCollection.find({
+	JobId: { $in: [1227085,
+1227068,
+1226989,
+1226980,
+1226913,
+1226894,
+1226889,
+1226888,
+1226800,
+1226778 ] }
+}, 
+{
+	_id: 0,
+	JobId: 1,
+	TotalApplications: 1,
+	ApplicantExperience0To2Years:1,
+	ApplicantExperience2To3Years:1,
+	ApplicantExperience3To5Years:1,
+	ApplicantExperience5To10Years:1,
+	ApplicantExperienceMoreThan10Years:1
+}
+)
+
+
+SELECT TOP 5 P_ID, EDUCATION, INSTITUTE, PASSING_YEAR FROM [bdjResumes]..[EDU]
+INNER JOIN [bdjResumes].[dbo].[EDULEVEL] AS l ON l.E_CODE = e.Edulevel AND l.E_CODE = e.EDULEVEL2
+WHERE e.EduLevel = 5 
+GROUP BY P_ID, EDUCATION, INSTITUTE, PASSING_YEAR 
+ORDER BY MAX(Passing_year) DESC

@@ -1,0 +1,109 @@
+1. Live Jobs
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	PublishDate: { $exists: true, 
+			$gte: new ISODate('2023-05-01T00:00:00.000Z'),
+			$lte: new ISODate('2024-02-03T18:00:00.000Z') 
+	},
+	DeadlineDate: { $exists: true, $gte: new ISODate('2024-02-03T00:00:00.000+00:00') },
+	IsPaused: { $eq: false },
+	IsDrafted: { $eq: false }
+})
+
+//4453
+
+2. Paused Jobs
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	PublishDate: { $exists: true, 
+			$gte: new ISODate('2023-05-01T00:00:00.000Z'),
+			$lte: new ISODate('2024-02-03T18:00:00.000Z') 
+	},
+	DeadlineDate: { $exists: true, $gte: new ISODate('2024-02-03T18:00:00.000+00:00') },
+	IsPaused: { $eq: true }
+})
+
+// 190
+
+3. Pending Jobs
+
+db.GatewayCollection.find({
+	JobId: { $exists: true},
+	PublishDate: { $exists: true, 
+			$gte: new ISODate('2023-05-01T00:00:00.000+00:00'),
+			$lte: new ISODate('2024-02-03T18:00:00.000+00:00') 
+	},
+	DeadlineDate: { $exists: true, $gte: new ISODate('2024-02-04T00:00:00.000+00:00') },
+	ContentVerify: { $eq: 0 },
+	SalesVerify: { $eq: 0},
+	AccountsVerify: { $eq: 0}
+})
+
+// 14
+
+4. Expired Jobs
+
+db.GatewayCollection.find({ 
+	JobId: { $exists: true },
+	PublishDate: { $exists: true, 
+			$gte: new ISODate('2023-05-01T00:00:00.000+00:00'),
+			$lte: new ISODate('2024-02-03T18:00:00.000+00:00') 
+	},
+	DeadlineDate: { $exists: true, $lte: new ISODate('2024-02-04T18:00:00.000+00:00') },
+	IsPaused: { $eq: false }
+})
+
+// 58828
+
+5. Counting Total Applicants
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+ 	PublishDate: { $exists: true,
+			$gte: new ISODate('2024-01-20T00:00:00.000+00:00'),
+			$lte: new ISODate('2024-02-03T13:00:00.000+00:00')
+	},
+	DeadlineDate: { $exists: true },
+	IsDrafted: { $eq: false },
+	IsPaused:  { $eq: false}
+}, {
+	JobId: 1, 
+	TotalApplications: 1, 
+	Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new ISODate('2024-02-03T13:00:00.000+00:00')]  }, then: "Live", 
+           else: "Expired"     
+        }
+      }
+	}).sort({ JobId: -1})
+
+
+6. Published Job
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	PublishDate: { $exists: true, 
+			$gte: new ISODate('2023-05-01T00:00:00.000+00:00'),
+			$lte: new ISODate() 
+	}
+}, { _id: 0, JobId: 1}).sort({ JobId: -1 })
+
+7. Processing Job
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	ProceedToPublishDate: { $exists: true, 
+			$gte: new ISODate('2023-05-01T00:00:00.000+00:00')
+	},
+	PublishDate: { $eq: new ISODate('0001-01-01T00:00:00.000+00:00') }
+}, { _id: 0, JobId: 1}) 
+
+8. Drafted Job 
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	PublishDate: { $exists: true, $gte: new ISODate('2023-05-01T00:00:00.000+00:00') },
+	IsDrafted: { $exists: true, $eq: true }
+}, { _id: 0, JobId: 1}) 

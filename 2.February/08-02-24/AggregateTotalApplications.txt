@@ -1,0 +1,42 @@
+db.getCollection("GatewayCollection").aggregate([
+  {
+    $match: {
+      "JobId": {
+        $in: [1222635, 1223049, 1223040, 1222852, 1222650, 1222839, 1222706, 1222982, 1222703]
+      }
+    }
+  },
+  {
+    $addFields: {
+      "IsPaused": {
+        $cond: {
+          if: {
+            $and: [
+              { $eq: ["$TotalApplications", 1] },
+              { $gt: ["$PublishDate", new Date('')] }
+            ]
+          },
+          then: false,
+          else: true
+        }
+      },
+      "Status": {
+        $cond: {
+          if: { $gt: ["$DeadlineDate", new Date()] },
+          then: "Live",
+          else: "Expired"
+        }
+      }
+    }
+  },
+  {
+    $project: {
+      "_id": 1,
+      "TotalApplications": 1,
+      "PublishDate": 1,
+      "IsPaused": 1,
+      "Status": 1
+      // Add other fields you want to display here
+    }
+  }
+])

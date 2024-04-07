@@ -1,0 +1,37 @@
+db.GatewayCollection.count({
+	JobId: { $exists: true, $id: [
+		
+	] },
+	PublishDate: { $exists: true, 
+			//$gte: new ISODate('2023-04-30T18:00:00.000+00:00'),
+			$lt: new ISODate('2024-02-08T09:43:00.000+00:00') 
+	},
+	DeadlineDate: { $exists: true, $gte: new ISODate('2024-02-07T09:43:00.000+00:00') },
+	IsPaused: { $eq: false },
+	IsDrafted: { $eq: false }
+})
+
+
+var targetIds = [
+
+];
+
+// Find IDs that are not in the database
+var missingIds = targetIds.filter(function(searchId) {
+    return db.getCollection("GatewayCollection").countDocuments({ "JobId": searchId }) === 0;
+});
+
+// Print missing IDs using forEach
+missingIds.forEach(function(id)
+ {
+    print(id)
+;
+});
+
+var targetIds = [/* Your list of IDs */];
+var excludedDocuments = db.getCollection("GatewayCollection").find({ "JobId": { $nin: targetIds } });
+
+// Now you can work with the excludedDocuments cursor
+excludedDocuments.forEach(function (doc) {
+    print(doc.JobId);
+});

@@ -1,0 +1,8 @@
+db.GatewayCollection.count({
+	PublishDate: { $gte: new ISODate('2023-05-01T00:00:00.000+00:00') }
+})
+
+=IF(ISNUMBER(MATCH(B2,A:A,0)),"",B2)
+=IF(ISNUMBER(MATCH(A2,B:B,0)),"",A2)
+
+1145575

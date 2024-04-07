@@ -1,0 +1,10 @@
+
+//Drafted jobs:
+
+db.GatewayCollection.find({
+ JobId: { $exists: true },
+ $and:[	
+   JobPostingDate: new ISODATE('2023-05-01T00:00:00.000+0000'),
+   IsDrafted: { $eq: true }
+ ]
+})

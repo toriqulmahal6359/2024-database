@@ -1,0 +1,38 @@
+// Distinct Service Type
+
+db.GatewayCollection.distinct("ServiceType");
+
+// Basic Listing
+
+db.testbyAzhar.updateMany(
+  { ServiceType: "Basic" },
+  { $set: { ServiceType: "Standard Listing" } }
+);
+
+// Premium Listing
+
+db.testbyAzhar.updateMany(
+  { ServiceType: "Standout" },
+  { $set: { ServiceType: "Premium Listing" } }
+);
+
+// Premium Plus
+
+db.testbyAzhar.updateMany(
+  { ServiceType: "Standout Premium" },
+  { $set: { ServiceType: "Premium Plus" } }
+);
+
+// SME Package
+
+db.testbyAzhar.updateMany(
+  { ServiceType: "Uddokta" },
+  { $set: { ServiceType: "SME Package" } }
+);
+
+// Free Listing
+
+db.testbyAzhar.updateMany(
+  { ServiceType: "Free" },
+  { $set: { ServiceType: "Free Listing" } }
+);

@@ -1,0 +1,33 @@
+db.JobSeekerProfileETL_Test.Aggregate([
+{
+	$group: {
+		_id: "$ApplicantId",
+		count: { $sum: 1 },
+		docs: { $push: "$_id" }
+	}
+},
+{
+    $match: {
+      count: { $gt: 1 }
+    }
+}
+])
+
+db.JobSeekerProfileETL_Test.aggregate([
+{ $match: { AplicantId: 10 } },
+{ $count: { $sum: 1 } },
+{ $project: { ApplicantId } }
+])
+
+
+// Correct
+
+db.JobSeekerProfileETL_Test.aggregate([
+  { $group: {
+      _id: "$ApplicantId",
+      count: { $sum: 1 }
+    }
+  },
+  { $match: { count: { $gt: 1 } },
+  { $project: { _id: 1 } }
+])

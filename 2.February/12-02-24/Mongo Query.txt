@@ -1,0 +1,30 @@
+db.GatewayCollection.find({
+	ApplicantProfileMatchingScoreBelow50: { $exists: true },
+}, {
+	_id: 0, JobId: 1, JobTitle: 1, CompanyId: 1
+})
+
+db.GatewayCollection.find({
+	ApplicantProfileMatchingScore70to89: { $exists: true },
+}, {
+	_id: 0, JobId: 1, JobTitle: 1, CompanyId: 1
+})
+
+db.GatewayCollection.find({
+	ApplicantProfileMatchingScoreAtLeast90: { $exists: true },
+}, {
+	_id: 0, JobId: 1, JobTitle: 1, CompanyId: 1
+})
+
+db.GatewayCollection.find({
+	ApplicantExperience0To2Years: { $exists: true }
+}, {
+	_id: 0, JobId: 1, JobTitle: 1, CompanyId: 1
+})
+
+db.GatewayCollection.find({
+	ApplicantExperience2To3Years: { $exists: true }
+}, {
+	_id: 0, JobId: 1, JobTitle: 1, CompanyId: 1
+})
+

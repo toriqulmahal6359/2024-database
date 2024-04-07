@@ -1,0 +1,5 @@
+SELECT * FROM [dbo].[EDULEVEL]
+SELECT TOP 5 * FROM [dbo].[EDU_Boards]
+SELECT * FROM [dbo].[EDU_RESULT]
+
+

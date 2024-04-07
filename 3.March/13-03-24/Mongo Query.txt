@@ -1,0 +1,12 @@
+// Status of Published Jobs
+
+db.getCollection(GatewayCollection).find({
+	{ JobId: {$in: [(jobId array)] } }
+},{ _id: 0, TotalApplication: 1, PublishDate: 1,
+		Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new Date(new Date().getTime() + 6 * 60 * 60 * 1000)]  }, then: "Live", 
+           else: "Expired"     
+        }
+      } 
+	 })

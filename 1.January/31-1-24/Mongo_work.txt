@@ -1,0 +1,39 @@
+1. Expired Jobs
+
+db.GatewayCollection.find({ 
+	JobId: { $exists: true },
+	DeadlineDate: { $exists: true, $lte: new ISODate('2024-01-30T00:00:00.000+00:00') },
+})
+
+//69324
+
+2. Live Jobs
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	DeadlineDate: { $exists: true, $gte: new ISODate('2024-01-31T00:00:00.000+00:00') }
+})
+
+//5361
+
+3.Paused Jobs
+
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+	IsPaused: { $eq: true }
+})
+
+//1539
+
+4. Pending Jobs
+
+db.GatewayCollection.find({
+	JobId: { $exists: true},
+	DeadlineDate: { $exists: true, $gte: new ISODate('2024-01-31T00:00:00.000+00:00') },
+	ContentVerify: { $eq: 0 },
+	SalesVerify: { $eq: 0},
+	AccountsVerify: { $eq: 0}
+})
+
+//822
+

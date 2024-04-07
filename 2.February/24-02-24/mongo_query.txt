@@ -1,0 +1,7 @@
+[
+  { $match: { "ApplicantId": { $ne: '' } } },
+  { $unwind: "$JobInformations" },
+  { $project: { "_id": 0, "ApplyId": "$JobInformations.ApplyId" } },
+  { $skip: 0 },
+  { $limit: 1000000},
+]

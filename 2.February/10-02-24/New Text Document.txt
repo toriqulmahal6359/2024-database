@@ -1,0 +1,74 @@
+{ 
+	JobId: { $exists: true },
+	JobPostingDate: { $lte: new ISODate("2023-05-01T00:00:00.000+00:00") }
+}
+
+[
+  {
+    $project: {
+      _id: 0,
+      JobInformations: {
+        $filter: {
+          input: "$JobInformations.JobId",
+          as: "job",
+          cond: {
+            $lt: ["$$job.ApplyDate", ISODate("2023-05-01T00:00:00Z")]
+          }
+        }
+      }
+    }
+  }
+]
+
+
+db.collection.aggregate([
+  {
+    $project: {
+      _id: 0,
+      "JobInformations.ApplyDate": 1,
+      "JobInformations.JobId": 1
+    }
+  },
+  {
+    $unwind: "$JobInformations"
+  },
+  {
+    $match: {
+      "JobInformations.ApplyDate": { $lt: ISODate("2023-05-01T00:00:00Z") }
+    }
+  },
+  {
+    $project: {
+      "JobInformations.ApplyDate": 1,
+      "JobInformations.JobId": 1
+    }
+  }
+])
+
+var cursor = db.ApplicantHiringActivityCollection.aggregate([
+    {
+      $match: {
+        "JobInformations.ApplyDate": { 
+            $exists: true, 
+            $lt: ISODate('2023-05-01T00:00:00.000+00:00') }
+      }
+    },
+    {
+      $project: {
+        "JobInformations.JobId": 1,
+        "JobInformations.ApplyDate": 1
+      }
+    }
+  ]);
+  
+//var distinctjobIds = db.ApplicantHiringActivityCollection.distinct("JobInformations.JobId", cursor);
+var distinctjobIds = cursor.toArray();  
+ 
+      distinctjobIds.forEach(function(jobId) {
+    print(jobId);
+});
+
+
+
+
+

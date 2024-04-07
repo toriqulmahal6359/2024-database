@@ -1,0 +1,21 @@
+db.testbyAzhar.updateMany(
+   {},
+   [
+     {
+       $set: {
+         "ServiceType": {
+           $switch: {
+             branches: [
+               { case: { $eq: ["$ServiceType", "Basic"] }, then: "Standard Listing" },
+               { case: { $eq: ["$ServiceType", "Standout"] }, then: "Premium Listing" },
+               { case: { $eq: ["$ServiceType", "Standout Premium"] }, then: "Premium Plus" },
+               { case: { $eq: ["$ServiceType", "Uddokta"] }, then: "SME Package" },
+               { case: { $eq: ["$ServiceType", "Free"] }, then: "Free listing" },
+             ],
+             default: null
+           }
+         }
+       }
+     }
+   ]
+)

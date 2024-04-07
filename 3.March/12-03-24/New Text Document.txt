@@ -1,0 +1,1 @@
+=VLOOKUP(B2, $A$2:$A$(any_value), 1, 0)

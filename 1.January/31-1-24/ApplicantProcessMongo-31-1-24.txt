@@ -1,0 +1,94 @@
+db.ApplicantHiringActivityCollection.find({
+	"JobInformations.JobId" : {$exists: true}
+},{
+_id: 0,  
+"JobInformations.JobId": 1 
+}).map(result => result.JobInformations.map(jobInfo => jobInfo.JobId))
+
+db.GatewayCollection.find({
+	JobId: { $exists: true }
+}, {
+	_id: 0
+	JobId: 1
+})
+
+db.ApplicantHiringActivityCollection.distinct("JobInformations.JobId", 
+{ "JobInformations.JobId": { $exists: true } })
+
+db.ApplicantHiringActivityCollection.aggregate([
+   {
+      $match: {
+         "JobInformations.JobId": { $exists: true }
+      }
+   },
+   {
+      $project: {
+         _id: 0,
+         allJobIds: {
+            $setUnion: {
+               $reduce: {
+                  input: "$JobInformations.JobId",
+                  initialValue: [],
+                  in: { $concatArrays: ["$$value", "$$this"] }
+               }
+            }
+         }
+      }
+   }
+])
+
+
+var applicantJobIds = db.ApplicantHiringActivityCollection.find(
+   { "JobInformations.JobId": { $exists: true } },
+   { _id: 0, "JobInformations.JobId": 1 }
+).map(result => result.JobInformations.map(jobInfo => jobInfo.JobId));
+
+var gatewayJobIds = db.GatewayCollection.find(
+   { JobId: { $exists: true } },
+   { _id: 0, JobId: 1 }
+).map(result => result.JobId);
+
+var unmatchedJobIds = [];
+
+for (var i = 0; i < applicantJobIds.length; i++) {
+   for (var j = 0; j < applicantJobIds[i].length; j++) {
+      if (!gatewayJobIds.includes(applicantJobIds[i][j])) {
+         unmatchedJobIds.push(applicantJobIds[i][j]);
+      }
+   }
+}
+
+printjson(unmatchedJobIds);
+
+// breaking Arrays
+
+db.ApplicantHiringActivityCollection.aggregate([
+  { $match: { "JobInformations.JobId": { $exists: true } } },
+  { $limit: 76380 },
+  {
+    $unwind: "$JobInformations.JobId"
+  },
+  { $group: { _id: null, uniqueJobIds: { $addToSet: "$JobInformations.JobId" } } },
+  { $project: { _id: 0, uniqueJobIds: 1 } }
+])
+
+
+// without breaking arrays
+ 
+db.ApplicantHiringActivityCollection.find({
+	ApplicantId: {$ne: null},		
+}, {
+ 	_id: 0, "JobInformations.JobId": 1 
+})
+
+db.ApplicantHiringActivityCollection.aggregate([
+  { $match: { ApplicantId: { $ne: null }, "JobInformations.JobId": { $exists: true } } },
+  { $limit: 76380 },
+  {
+    $unwind: "$JobInformations"
+  },
+  { $group: { _id: null, uniqueJobIds: { $addToSet: "$JobInformations.JobId" } } },
+  { $project: { _id: 0, uniqueJobIds: 1 } }
+])
+
+

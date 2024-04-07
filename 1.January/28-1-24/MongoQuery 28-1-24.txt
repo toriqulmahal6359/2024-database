@@ -1,0 +1,102 @@
+db.GatewayCollection.find({
+	JobId: { $exists: true },
+
+})
+
+db.GatewayCollection.find({
+     JobId: { $exists: true },
+     IsPaused: { $exists: true },
+     TotalApplications: { $exists: true, $ne: null },
+     DeadlineDate: {$exists: true }
+},{   
+     JobId: 1,
+     IsPaused: 1,
+     TotalApplications: 1,
+     Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new Date()]  }, then: "Live", 
+           else: "Expired"     
+        }
+      }
+  }
+);
+
+db.GatewayCollection.countDocuments({
+     JobId: { $exists: true },
+     IsPaused: { $exists: true },
+     TotalApplications: { $exists: true, $ne: null },
+     DeadlineDate: {$exists: true }
+},{   
+     JobId: 1,
+     IsPaused: 1,
+     TotalApplications: 1,
+     Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new Date()]  }, then: "Live", 
+           else: "Expired"     
+        }
+      }
+});
+
+var maxValue = 1223662
+var minValue = 1137261
+
+
+db.GatewayCollection.find({
+     JobId: { $gte: 1137261, $lte: 1223662 },
+     IsPaused: { $exists: true },
+     TotalApplications: { $exists: true, $ne: null },
+     DeadlineDate: {$exists: true },
+     PublishDate: { $exists: true, $gte: ISODate('2024-01-20T03:23:00.000+00:00') }
+},{   
+     JobId: 1,
+     IsPaused: 1,
+     TotalApplications: 1,
+     Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new Date()]  }, then: "Live", 
+           else: "Expired"     
+        }
+      }
+  }
+);
+
+db.GatewayCollection.count({
+     JobId: { $gte: 1137261, $lte: 1223662 },
+     IsPaused: { $exists: true },
+     TotalApplications: { $exists: true, $ne: null },
+     DeadlineDate: {$exists: true }
+},{   
+     JobId: 1,
+     IsPaused: 1,
+     TotalApplications: 1,
+     Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new Date()]  }, then: "Live", 
+           else: "Expired"     
+        }
+      }
+  }
+);
+
+
+var job_id = 1143010;
+
+db.GatewayCollection.find({
+     JobId: { $exists: true, $eq: job_id  },
+     IsPaused: { $exists: true },
+     TotalApplications: { $exists: true, $ne: null },
+     DeadlineDate: {$exists: true },
+     PublishDate: { $exists: true, $gte: ISODate('2024-01-20T03:23:00.000+00:00') }
+},{   
+     JobId: 1,
+     IsPaused: 1,
+     TotalApplications: 1,
+     Status: {
+        $cond: {
+           if: { $gte: ["$DeadlineDate", new Date()]  }, then: "Live", 
+           else: "Expired"     
+        }
+      }
+  }
+);

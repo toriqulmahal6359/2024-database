@@ -1,0 +1,5 @@
+SELECT COUNT(DISTINCT JP_ID) AS [No. Of Jobs], COUNT(DISTINCT CP_ID) AS [No. of Companies] FROM bdjCorporate..DBO_JOBPOSTINGS
+WHERE PublishDate >= '03/01/2024 00:00:00' AND PublishDate <= '03/21/2024 15:45:00'
+
+SELECT COUNT(DISTINCT JP_ID) AS [No. Of Jobs], COUNT(DISTINCT CP_ID) AS [No. of Companies] FROM [bdjActiveJobs].[dbo].[DBO_JOBPOSTINGS_ALL_AJ]
+WHERE PublishDate >= '03/01/2024 00:00:00' AND PublishDate <= '03/21/2024 15:45:00'

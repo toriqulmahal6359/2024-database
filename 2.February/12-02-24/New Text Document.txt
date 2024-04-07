@@ -1,0 +1,7 @@
+db.ApplicantHiringActivityCollection([
+ 	{ $unwind: "JobInformations" },
+	{ $match: {
+		
+	} }
+
+])

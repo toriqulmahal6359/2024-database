@@ -1,0 +1,12 @@
+SELECT * FROM [dbo].[DBO_JOB_INBOX] WHERE JP_ID = 1213001
+
+SELECT * FROM [dbo].[DBO_JOBPOSTINGS]
+
+
+WITH jobCTE AS (
+	SELECT j.CP_ID, j.JP_ID, 
+	CASE WHEN j.JobLang = 2 THEN bj.TITLE ELSE j.JobTitle END AS [Job Title] FROM [dbo].[DBO_JOBPOSTINGS] AS j
+	LEFT JOIN [dbo].[DBO_BNG_JOBPOSTINGS] AS bj ON bj.JP_ID = j.JP_ID
+	WHERE j.VERIFIED = 1 AND j.OnlineJob = 1 AND j.RegionalJob <> 4
+)
+, 

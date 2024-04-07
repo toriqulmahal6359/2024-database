@@ -1,0 +1,23 @@
+SELECT TOP 5 * FROM [dbo].[DBO_JOBPOSTINGS]
+SELECT TOP 5 * FROM [dbo].[DBO_JOB_INBOX]
+
+SELECT TOP 5 * FROM [dbo].[DBO_JOBPOSTINGS] AS J
+WHERE J.Verified = 1 And J.Drafted = 0 And J.Closed=0
+	AND J.DeadLine > GETDATE()
+
+SELECT COUNT(*) FROM [dbo].[DBO_JOBPOSTINGS] AS J
+WHERE J.Verified = 1 And J.Drafted = 0 And J.Closed=0
+	AND J.DeadLine >= CONVERT(VARCHAR(100), GETDATE(), 101)
+	AND j.PublishDate  
+
+SELECT COUNT(J.OnlineJob) AS JOB_POST_COUNT FROM [dbo].[DBO_JOB_INBOX] AS I
+	INNER JOIN [dbo].[DBO_JOBPOSTINGS] AS J ON J.JP_ID = I.JP_ID
+	WHERE J.Verified = 1 And J.Drafted = 0 And J.Closed=0 
+	AND J.DeadLine > GETDATE()
+	AND I.P_ID = 4669557
+
+
+
+--SELECT * FROM [dbo].[DBO_JOB_INBOX] WHERE P_ID = 4669557
+--COUNT(JP_ID) AS JOB_POST_COUNT 
+

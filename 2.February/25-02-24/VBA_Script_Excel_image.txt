@@ -1,0 +1,29 @@
+Sub URLPictureInsert()
+Dim Pshp As Shape
+Dim xRg As Range
+Dim xCol As Long
+On Error Resume Next
+Application.ScreenUpdating = False
+Set Rng = ActiveSheet.Range("A2:A5")
+For Each cell In Rng
+filenam = cell
+ActiveSheet.Pictures.Insert(filenam).Select
+Set Pshp = Selection.ShapeRange.Item(1)
+If Pshp Is Nothing Then GoTo lab
+xCol = cell.Column + 1
+Set xRg = Cells(cell.Row, xCol)
+With Pshp
+.LockAspectRatio = msoFalse
+If .Width > xRg.Width Then .Width = xRg.Width * 2 / 3
+If .Height > xRg.Height Then .Height = xRg.Height * 2 / 3
+.Top = xRg.Top + (xRg.Height - .Height) / 2
+.Left = xRg.Left + (xRg.Width - .Width) / 2
+End With
+lab:
+Set Pshp = Nothing
+Range("A2").Select
+Next
+Application.ScreenUpdating = True
+End Sub
+
+

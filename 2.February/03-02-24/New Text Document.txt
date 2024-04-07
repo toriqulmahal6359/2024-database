@@ -1,0 +1,10 @@
+B = 63431
+A = 76380
+
+=IFERROR(INDEX($B$2:$B$63431, SMALL(IF(ISNUMBER(MATCH($B$2:$B$63431, $A$2:$A$76380, 0)), "", ROW($B$2:$B$63431)-MIN(ROW($B$2:$B$63431))+1), ROW(INDIRECT("1:"&COUNTIF($B$2:$B$63431,"<>"&"")))), ""), "")
+
+IF(ISNUMBER(MATCH(B1,ColumnToSearch,0)),"",B1)
+
+COUNT(G:G)
+
+ColumnToSearch = $B$2:$B$63431
