@@ -1,0 +1,1 @@
+SELECT * FROM bdjResumes..EXP WHERE P_ID = 6948553

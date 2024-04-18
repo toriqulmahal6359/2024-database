@@ -16,6 +16,8 @@ SELECT TOP 5 * FROM [dbo].[EXP]
 --SELECT TOP 5 DATEDIFF(YEAR, 0, DATEADD(MONTH, us.TExp, 0)) AS Experience FROM UserSummary AS us WHERE P_ID = 955
 SELECT TOP 5 FLOOR(us.TExp/12) AS Experience FROM UserSummary AS us WHERE P_ID = 955
 
+SELECT TOP 5 DATEDIFF(YEAR, 0, DATEADD(MONTH, TExp, 0)) AS Experience FROM UserSummary AS us WHERE P_ID = 955
+
 WITH BaseCTE AS (
 	SELECT
 		TOP 1000 u.accID, 
@@ -23,7 +25,7 @@ WITH BaseCTE AS (
 			c.CAT_NAME,
 			--DATEADD(MONTH, 12, u.accCreatedOn)
 			--FLOOR(us.TExp/12) AS Experience,
-			DATEDIFF(YEAR, 0, DATEADD(MONTH, us.TExp, 0)) AS Experience,
+			--DATEDIFF(YEAR, 0, DATEADD(MONTH, us.TExp, 0)) AS Experience,
 			CASE WHEN u.CVPosted = 1 THEN 'YES'
 				ELSE 'NO'
 			END AS CVPosted,
