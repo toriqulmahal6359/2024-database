@@ -1,0 +1,6 @@
+SELECT DISTINCT JP_ID FROM bdjCorporate..DBO_JOBPOSTINGS AS j
+WHERE j.Postingdate >= '04/01/2024'
+
+SELECT * FROM bdjCorporate..DBO_JOBPOSTINGS AS j
+WHERE j.PublishDate >= '04/01/2024'
+

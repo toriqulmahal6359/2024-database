@@ -1,0 +1,22 @@
+const jobIds = [
+
+];
+
+db.ApplicantHiringActivityCollection.aggregate([
+  {
+    $match: {
+      "JobInformations.JobId": { $in: jobIds }
+    }
+  },
+  {
+    $group: {
+      _id: "$JobInformations.JobId"
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      JobId: "$_id"
+    }
+  }
+]);
