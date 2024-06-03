@@ -1,0 +1,57 @@
+I have a structure like as follows, I need to count "TestStepId" For the jobId: 135682. Now How do I achieve it ? 
+
+{
+	"ApplicantId" : 13526988,
+	"UserInformations": [
+		{
+			"JobId": 135682,
+			"ApplyId": 2589632,
+			"ApplyDate" : 2023-05-03T18:00:00.000+00:00,
+			"ApplicantprocessInformation": [
+				{
+					
+					"ApplicantProcessId": 8955439
+					"ApplyId": 2589632,
+					"TestStepId" : 122622,
+					"TestName": "Online Test" 
+				},
+				{
+					
+					"ApplicantProcessId": 8955521
+					"ApplyId": 2589632,
+					"TestStepId" : 122623,
+					"TestName": "Written" 
+				},
+				{
+					"ApplicantProcessId": 8955428
+					"ApplyId": 2589632,
+					"TestStepId" : 122624,
+					"TestName": "Viva"
+				}
+				
+			]
+		},
+		{
+			"JobId": 285682,
+			"ApplyId": 32569874,
+			"ApplyDate" : 2023-05-03T18:00:00.000+00:00,
+			"ApplicantprocessInformation": [
+				{
+					
+					"ApplicantProcessId": 7589654
+					"ApplyId": 32569874,
+					"TestStepId" : 1225235,
+					"TestName": "Online Test" 
+				},
+				{
+					
+					"ApplicantProcessId": 2563241
+					"ApplyId": 2589632,
+					"TestStepId" : 1225236,
+					"TestName": "Written" 
+				},
+				
+			]
+		},
+	]
+}

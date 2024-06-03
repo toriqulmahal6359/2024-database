@@ -111,7 +111,7 @@ SELECT DISTINCT   J.JP_ID ,j.CP_ID,j.JobTitle
 select  J.CP_ID, j.JP_ID,j.JobTitle 
 from jobcte j
 where j.JP_ID not in (select JP_ID from paid) and
-j.JP_ID not in(select JP_ID  from[rp].[ApplicantCVPurchase] where OPID is not null)
+j.JP_ID not in(select JP_ID  from bdjCorporate.[rp].[ApplicantCVPurchase] where OPID is not null)
 )
 , companyCTE AS (
 	SELECT top 10 j.JP_ID, j.[JobTitle], j.CP_ID, c.NAME AS [Company Name], ua.UserId, ua.[User_Name] AS [Admin], ua.UpdatedOn 
@@ -192,7 +192,7 @@ SELECT DISTINCT top 2  J.JP_ID ,j.CP_ID,j.JobTitle
 select  J.CP_ID, j.JP_ID,j. JobTitle 
 from jobcte j
 where --j.JP_ID not in (select jp_id from paid) and
-j.JP_ID  in (select JP_ID  from[rp].[ApplicantCVPurchase] where OPID is not null)
+j.JP_ID  in (select JP_ID from bdjCorporate.[rp].[ApplicantCVPurchase] where OPID is not null)
 
 
 )
@@ -232,4 +232,4 @@ s.[Shortlisted], s.[Rejected]
 FROM total_count AS t
 left JOIN shortlist_count AS s ON s.JP_ID = t.JP_ID
 
-SELECT DISTINCT JP_ID FROM [rp].[ApplicantCVPurchase]
+SELECT DISTINCT JP_ID FROM bdjCorporate.[rp].[ApplicantCVPurchase]

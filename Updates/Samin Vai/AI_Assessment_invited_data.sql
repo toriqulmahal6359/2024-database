@@ -13,7 +13,8 @@
 
 WITH assessmentCTE AS (
 	SELECT DISTINCT a.JP_ID, a.Deadline FROM bdjCorporate.[aiass].[AIAssessmentInfo] AS a
-	WHERE a.Deadline >= CONVERT(VARCHAR(100), GETDATE(), 101) AND a.Deadline <= CONVERT(VARCHAR(100), GETDATE() + 2, 101)
+	WHERE a.Deadline >= CONVERT(VARCHAR(100), GETDATE() + 1, 101) AND a.Deadline <= CONVERT(VARCHAR(100), GETDATE() + 3, 101)
+	--WHERE a.Deadline >= '04/09/2024' AND a.Deadline <= '04/11/2024'
 )
 , jobCTE AS (
 	SELECT DISTINCT a.JP_ID, 

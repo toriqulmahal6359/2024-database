@@ -1,0 +1,34 @@
+db.ApplicantHiringActivityCollection.aggregate([{ 
+  $match : { 
+	"JobInformations.ApplyDate" : { $gte: new Date("2024-03-31T18:00:00.000+00:00") }
+  }
+},
+{ $unwind: "$JobInformations" },
+{
+  $match: {
+ 	"JobInformations.ApplyDate" : { $gte: new Date("2024-03-31T18:00:00.000+00:00") } 
+  }
+},
+{ 
+  $group: {
+	_id: "$JobInformations.ApplyId",
+  }
+},
+{ $skip: 1000000},
+{ $limit: 1000000},
+{
+  $project: {
+	_id: 0,
+        "ApplyId": "$_id"
+ }	
+},
+{ $sort: { "ApplyId": 1 } },
+
+// {
+//  $group: {
+// 	_id: null,
+//        count: { $sum: 1},
+//        ApplyIds: { $push: "$ApplyId" }
+//  }
+// }
+])

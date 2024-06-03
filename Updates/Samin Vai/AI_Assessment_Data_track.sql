@@ -7,7 +7,7 @@ WITH activityCTE AS (
 	INNER JOIN bdjCorporate.rp.TestSteps rp ON j.Jp_ID = rp.JP_ID AND rp.TestType = 'aiasmnt'
 	INNER JOIN bdjCorporate.rp.applicantprocess p on j.ApplyID = p.ApplyId AND p.Levelstatus = rp.TestLevel
 	INNER JOIN bdjCorporate..DBO_COMPANY_PROFILES AS c ON c.CP_ID = jp.CP_ID
-	WHERE p.UpdatedOn >= '03/10/2024 14:00:00'
+	WHERE p.UpdatedOn >= '03/10/2024 14:00:00' AND j.P_ID NOT IN (SELECT P_ID FROM bdjCorporate..ListOfPID)
 	--WHERE jp.PublishDate >= '03/10/2024 14:00:00'
 )
 , countAssessmentCTE AS (

@@ -1,0 +1,1 @@
+SELECT TOP 500 * FROM bdjCorporate..ContactPersons WHERE ActiveUser = 1

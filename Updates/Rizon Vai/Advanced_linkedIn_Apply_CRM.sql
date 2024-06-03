@@ -1,0 +1,33 @@
+CREATE TABLE #temp(
+	JP_ID INT
+)
+INSERT INTO #temp (JP_ID) VALUES 
+--(1247800),	(1246920),	(1247593),	(1248834),	(1247984),	(1247342),	(1247440),	(1248136),	(1247539),	(1247537),	(1247432),	(1247395),	(1248131),	(1248036),	
+--(1247968),	(1248492),	(1248461),	(1248170),	(1248162),	(1248160),	(1248155),	(1248287),	(1248295),	(1248623),	(1248733),	(1247833),	(1247838)
+(1247800),	(1246920),	(1247593),	(1248834),	(1247833),	(1247984),	(1247342),	(1247440),	(1248136),	(1247539),	(1247537),	(1247432),	
+(1247395),	(1248131),	(1248036),	(1247968),	(1248492),	(1248461),	(1248170),	(1248162),	(1248160),	(1248155),	(1248287),	(1248295),	(1248623),	(1248733),	(1247838)
+
+
+--DROP TABLE #temp
+--SELECT * FROM #temp
+
+;WITH jobcte AS(
+	SELECT JP_ID,  COUNT(DISTINCT P_ID) a_count
+	FROM bdjLogs.[crm].[ApplyInfo]
+	--WHERE CONVERT(DATE, AppliedOn, 101) >= '05/17/2024' AND CONVERT(DATE, AppliedOn, 101) <= '05/18/2024'
+	WHERE CONVERT(DATE, AppliedOn, 101) >= '05/19/2024'
+	GROUP BY JP_ID
+)
+SELECT t.JP_ID, ISNULL(j.a_count, 0) AS [Applicant]--,case when f.c is null then  0 else f.c end
+FROM #temp t
+LEFT JOIN jobcte j on t.JP_ID = j.JP_ID
+--WHERE t.JP_ID = 1247833
+
+
+
+--CRM username from ADMIN table
+
+--SELECT DISTINCT ad.USER_NAME, a.UserID FROM bdjLogs.[crm].[ApplyInfo] AS a
+--LEFT JOIN bdjEmails..ADMIN AS ad ON a.UserID = ad.ID
+----LEFT JOIN bdjResumes..userAccounts AS ua ON a.P_ID = ua.accId
+--WHERE CONVERT(DATE, AppliedOn, 101) = '05/17/2024'

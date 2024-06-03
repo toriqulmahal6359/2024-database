@@ -1,0 +1,7 @@
+SELECT TOP 5 * FROM bdjCorporate..DBO_COMPANY_PROFILES
+
+SELECT TOP 5 * FROM bdjCorporate..DBO_JOBPOSTINGS
+
+SELECT TOP 1000 * FROM bdjCorporate..DBO_JOB_INBOX
+
+SELECT TOP 5 * FROM bdjCorporate..CompanyViewedCV

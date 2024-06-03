@@ -1,0 +1,4 @@
+SELECT COUNT(DISTINCT j.JP_ID) AS [Job_count], COUNT(ApplyId) AS [Apply_count] FROM bdjCorporate..DBO_JOBPOSTINGS AS j
+INNER JOIN bdjCorporate..DBO_JOB_INBOX AS ji ON ji.JP_ID = j.JP_ID
+WHERE j.CP_ID = 15058 --16425 --16174--15583 --16174
+AND j.PublishDate >= '01/01/2023'

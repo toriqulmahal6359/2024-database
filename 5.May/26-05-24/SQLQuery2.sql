@@ -1,0 +1,10 @@
+SELECT TOP (1000) [Id]
+      ,[ApplyId]
+      ,[LevelStatus]
+      ,[NotifiedOn]
+      ,[Activity]
+      ,[ReasonId]
+      ,[ReplyText]
+      ,[ChangeRequest]
+      ,[ActivityDate]
+  FROM [bdjCorporate].[rp].[ApplicantsResponse] WHERE LevelStatus = 5

@@ -1,0 +1,11 @@
+{ 
+	$match: { "JobInformations.JobId" : 1230305, ApplicantId: 6936700 }
+},
+{
+	$unwind: "$JobInformations"
+},
+{
+	$match: { }
+}
+
+{ _id: 0, ApplicantId: 1 }

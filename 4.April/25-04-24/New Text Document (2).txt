@@ -1,0 +1,28 @@
+db.ApplicantHiringActivityCollection.aggregate([
+  {
+    $match: {
+      "JobInformations.ApplyId": { $in: [25625, 68525] }
+    }
+  },
+  {
+    $unwind: "$JobInformations"
+  },
+  {
+    $match: {
+      "JobInformations.ApplyId": { $in: [25625, 68525] }
+    }
+  },
+  {
+    $group: {
+      _id: "$JobInformations.ApplyId"
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      "ApplyId": "$_id"
+    }
+  }
+])
+
+

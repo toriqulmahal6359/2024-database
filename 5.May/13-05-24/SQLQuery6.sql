@@ -1,0 +1,1 @@
+SELECT accId, accIDCode FROM bdjResumes..UserAccounts WHERE accID IN (2688652, 7014583)
